@@ -13,6 +13,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int NOM_CAMEL = 0;
         
         SwingUtilities.invokeLater(() -> {
             table gameTable = new table(6, 7);
