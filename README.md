@@ -1,17 +1,38 @@
-# puissance4
+# Puissance4
 
 ## Overview
-puissance4 is a Java-based implementation of the classic Connect Four game. This project is structured using Maven, which helps manage dependencies and build processes.
+Puissance4 is a Java-based implementation of the classic Connect Four game. The project is structured using Maven for dependency management and build processes. It includes a simple command-line interface for gameplay.
 
 ## Project Structure
 The project follows a standard Maven directory layout:
 
-- **src/main/java**: Contains the main application code.
-- **src/main/resources**: Contains resource files needed at runtime.
-- **src/test/java**: Contains unit tests for the application.
-- **src/test/resources**: Contains resource files needed for testing.
+```
+puissance4
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── Main.java
+│   │   └── resources
+│   ├── test
+│   │   ├── java
+│   │   │   └── MainTest.java
+│   │   └── resources
+├── .github
+│   └── workflows
+│       └── ci.yml
+├── LICENSE
+├── pom.xml
+├── README.md
+└── run.sh
+```
+
+## Prerequisites
+- Java 17 or higher
+- Maven 3.8 or higher
+- Git (optional, for cloning the repository)
 
 ## Setup Instructions
+
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
@@ -25,16 +46,21 @@ The project follows a standard Maven directory layout:
    ```
 
 3. **Run the application**:
-   You can run the application using the provided shell script:
+   Use the provided shell script to compile and launch the game:
    ```bash
    ./run.sh
    ```
 
 ## Usage
-After running the application, follow the on-screen instructions to play the game. The game allows two players to take turns dropping their pieces into a grid, aiming to connect four pieces in a row, either horizontally, vertically, or diagonally.
+After running the application, follow the on-screen instructions to play the game. The game allows two players to take turns dropping their pieces into a grid, aiming to connect four pieces in a row (horizontally, vertically, or diagonally).
+
+## Continuous Integration
+This project uses GitHub Actions for continuous integration. The workflow is defined in `.github/workflows/ci.yml` and includes:
+- Building the project
+- Running tests
 
 ## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+Contributions are welcome! If you find a bug or have an idea for an enhancement, feel free to open an issue or submit a pull request.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
