@@ -9,7 +9,7 @@ public class player {
     private String name;
     private int numeroPlayeur;
 
-    player(Color myColor, String name){
+    public player(Color myColor, String name){
         this.name = name;
         this.myColor = myColor;
         this.numeroPlayeur = nombrePlayeur;

@@ -3,40 +3,53 @@ package table;
 import Player.player;
 
 public class table {
-    private int height;
-    private int width;
+    private int numberLine;
+    private int numberColumn;
     private player[][] currentTable;
 
-    table(int height, int width){
-        this.height = height;
-        this.width = width;
-        this.currentTable = new player[height][width];
+    public table(int numberLine, int numberColumn) {
+        this.numberLine = numberLine;
+        this.numberColumn = numberColumn;
+        this.currentTable = new player[numberLine][numberColumn];
     }
 
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+    public String toString() {
+        String sb = "";
+        for (int i = 0; i < numberLine; i++) {
+            for (int j = 0; j < numberColumn; j++) {
                 if (currentTable[i][j] == null) {
-                    sb.append(". ");
+                    sb += ". ";
                 } else {
-                    sb.append(currentTable[i][j].getNumeroPLayeur()).append(" ");
+                    sb += currentTable[i][j].getNumeroPLayeur() + " ";
                 }
             }
-            sb.append("\n");
+            sb += "\n";
         }
-        return sb.toString();
+        return sb;
     }
 
-    public int getHeight(){
-        return this.height;
+    public int getNumberLine() {
+        return this.numberLine;
     }
 
-    public int getWidth(){
-        return this.width;
+    public int getNumberColumn() {
+        return this.numberColumn;
     }
 
-    public player[][] getCurrentTable(){
+    public player[][] getCurrentTable() {
         return this.currentTable;
+    }
+
+    public player getInformation(int x, int y) {
+        return this.currentTable[x][y];
+    }
+
+    public boolean setInformation(int x, int y, player currentPlayer) {
+        player prevPlayer = this.currentTable[x][y];
+        if (prevPlayer != null) {
+            return false;
+        }
+        this.currentTable[x][y] = currentPlayer;
+        return true;
     }
 }

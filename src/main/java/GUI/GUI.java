@@ -3,6 +3,9 @@ package GUI;
 import java.awt.*;
 import javax.swing.*;
 
+import Player.player;
+import table.table;
+
 public class GUI{
     private JFrame mainFrame;
     private boolean isAvailable;
@@ -58,6 +61,35 @@ public class GUI{
         this.mainFrame.repaint();
     }
 
+    public void drawTable(table myTable) {
+        int nombreLigne = myTable.getNumberLine();
+        int nombreColonne = myTable.getNumberColumn();
+    
+        JPanel gridPanel = new JPanel(new GridLayout(nombreLigne, nombreColonne));
+        gridPanel.setPreferredSize(new Dimension(this.width, this.height));
+    
+        for (int l = 0; l < nombreLigne; l++) {
+            for (int c = 0; c < nombreColonne; c++) {
+                player currentPlayer = myTable.getInformation(l, c);
+                JPanel cell = new JPanel();
+    
+                if (currentPlayer != null) {
+                    cell.setBackground(currentPlayer.getColor());
+                } else {
+                    cell.setBackground(Color.WHITE);
+                }
+    
+                cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                gridPanel.add(cell);
+            }
+        }
+    
+        this.mainFrame.getContentPane().removeAll();
+        this.mainFrame.getContentPane().add(gridPanel, BorderLayout.CENTER);
+        this.mainFrame.revalidate();
+        this.mainFrame.repaint();
+    }
+    
     public JFrame getMainFrame() {
         return this.mainFrame;
     }
