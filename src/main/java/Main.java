@@ -3,6 +3,7 @@ import Player.player;
 import table.table;
 
 import javax.swing.UIManager;
+import javax.swing.SwingUtilities;
 import java.awt.Color;
 
 public class Main {
@@ -13,14 +14,18 @@ public class Main {
             e.printStackTrace();
         }
         
-        GUI guiInterface = new GUI("Puissance - 4", 800, 400);
-
-        table maTable = new table(8, 8);
-        player player1 = new player(Color.BLUE, "Willem");
-        maTable.setInformation(0, 0, player1);
-        System.out.println(maTable);
-
-        guiInterface.drawTable(maTable);
-
+        SwingUtilities.invokeLater(() -> {
+            // Create a new 6x7 table (standard Puissance 4 dimensions)
+            table gameTable = new table(6, 7);
+            
+            // Create players
+            player player1 = new player(Color.RED, "Joueur 1");
+            player player2 = new player(Color.YELLOW, "Joueur 2");
+            
+            // Create and configure GUI
+            GUI guiInterface = new GUI("Puissance 4", 700, 600);
+            guiInterface.drawTable(gameTable);
+            guiInterface.setVisible(true);
+        });
     }
 }
