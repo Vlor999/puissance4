@@ -17,9 +17,14 @@ public class GUI{
     private table currentTable;
     private JPanel gridPanel;
     private JLabel statusLabel;
+    private boolean headless;
 
     public GUI() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.headless = GraphicsEnvironment.isHeadless();
+        
+        Dimension screenSize = this.headless ? 
+            new Dimension(800, 600) : Toolkit.getDefaultToolkit().getScreenSize();
+        
         int screenWidth = (int) screenSize.getWidth();
         int screenHeight = (int) screenSize.getHeight();
         this.frameName = "Puissance 4";
@@ -30,6 +35,7 @@ public class GUI{
     }
 
     public GUI(String name, int width, int height) {
+        this.headless = GraphicsEnvironment.isHeadless();
         this.frameName = name;
         this.width = width;
         this.height = height;
@@ -38,6 +44,12 @@ public class GUI{
     }
 
     private void initializeFrame() {
+        if (this.headless) {
+            // In headless mode, don't create actual GUI components
+            this.isAvailable = false;
+            return;
+        }
+        
         this.mainFrame = new JFrame();
         this.mainFrame.setTitle(this.frameName);
         this.mainFrame.setSize(this.width, this.height);
@@ -48,16 +60,18 @@ public class GUI{
     }
 
     public void destroyMainFrame() {
-        if (this.isAvailable) {
+        if (this.isAvailable && !this.headless) {
             this.mainFrame.dispose();
             this.isAvailable = false;
             System.out.println("Window: " + this.frameName + " is destroyed");
         } else {
-            System.out.println("The window: " + this.frameName + " is no longer available");
+            System.out.println("The window: " + this.frameName + " is no longer available or in headless mode");
         }
     }
 
     public void ajoutTexteFrame(String sentence) {
+        if (this.headless) return;
+        
         JLabel label = new JLabel(sentence);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.mainFrame.getContentPane().add(label, BorderLayout.CENTER);
@@ -66,6 +80,8 @@ public class GUI{
     }
 
     public void drawTable(table myTable) {
+        if (this.headless) return;
+        
         this.currentTable = myTable;
         int nombreLigne = myTable.getNumberLine();
         int nombreColonne = myTable.getNumberColumn();
@@ -140,6 +156,8 @@ public class GUI{
     }
     
     private void handleColumnClick(int column) {
+        if (this.headless) return;
+        
         player currentPlayer = player.getPlayingPlayer();
         int row = currentTable.findLowestEmptyRow(column);
         
@@ -188,16 +206,26 @@ public class GUI{
 
     public void setWidth(int width) {
         this.width = width;
-        this.mainFrame.setSize(this.width, this.height);
+        if (!this.headless && this.mainFrame != null) {
+            this.mainFrame.setSize(this.width, this.height);
+        }
     }
 
     public void setHeight(int height) {
         this.height = height;
-        this.mainFrame.setSize(this.width, this.height);
+        if (!this.headless && this.mainFrame != null) {
+            this.mainFrame.setSize(this.width, this.height);
+        }
     }
 
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
-        this.mainFrame.setVisible(this.isVisible);
+        if (!this.headless && this.mainFrame != null) {
+            this.mainFrame.setVisible(this.isVisible);
+        }
+    }
+    
+    public boolean isHeadless() {
+        return this.headless;
     }
 }

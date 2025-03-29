@@ -2,9 +2,8 @@ package GUI;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,9 +11,9 @@ public class GUITest {
 
     private GUI gui;
     
-    @BeforeAll
-    public static void setUpHeadlessMode() {
-        // Set up for headless mode in CI environment
+    @BeforeEach
+    public void setUp() {
+        // Make sure we're consistently testing
         System.setProperty("java.awt.headless", "true");
     }
     
@@ -22,6 +21,7 @@ public class GUITest {
     public void tearDown() {
         if (gui != null) {
             gui.destroyMainFrame();
+            gui = null;
         }
     }
     
@@ -81,6 +81,7 @@ public class GUITest {
     public void testFrameNameGetter() {
         gui = new GUI("Test Window", 0, 0);
         assertEquals("Test Window", gui.getFrameName());
+        assertTrue(gui.isHeadless()); // Verify we're in headless mode
     }
     
     @Test
@@ -88,5 +89,13 @@ public class GUITest {
         gui = new GUI("Test", 800, 600);
         assertEquals(800, gui.getWidth());
         assertEquals(600, gui.getHeight());
+        assertTrue(gui.isHeadless()); // Verify we're in headless mode
+    }
+    
+    @Test
+    public void testHeadlessMode() {
+        gui = new GUI("Headless Test", 100, 100);
+        assertTrue(gui.isHeadless());
+        assertNull(gui.getMainFrame()); // In headless mode, mainFrame should be null
     }
 }
