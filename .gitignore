@@ -1,0 +1,19 @@
+# Binaires
+*.class
+*.jar
+*.war
+*.ear
+
+# Dossiers générés
+/target/
+/out/
+
+# IDE
+/.idea/
+/.vscode/
+/*.iml
+.DS_Store
+
+# Logs
+/logs/
+/*.log
